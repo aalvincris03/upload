@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload & Download</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h1 class="card-title text-center mb-4">File Upload & Download System</h1>
+
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                <div class="alert alert-success" role="alert">
+                                    {% for message in messages %}
+                                        {{ message }}<br>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+
+                        <div class="border border-primary border-2 border-dashed rounded p-4 mb-4 text-center">
+                            <h3 class="mb-3">Upload File</h3>
+                            <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <input type="file" class="form-control" name="file" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Upload File</button>
+                            </form>
+                            <small class="text-muted mt-2 d-block">Supported: Images, Documents, Videos (max 30MB for videos)</small>
+                        </div>
+
+                        <div class="files-list">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3 class="mb-0">Available Files</h3>
+                                <div class="btn-group" role="group">
+                                    <a href="{{ url_for('sync_files') }}" class="btn btn-info btn-sm">Sync from GitHub</a>
+                                    <a href="{{ url_for('delete_all_files') }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete all files?')">Delete All</a>
+                                </div>
+                            </div>
+                            {% if files_info %}
+                                <div class="list-group">
+                                    {% for filename, info in files_info.items() %}
+                                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <span class="me-2">{{ filename }}</span>
+                                                {% if info.local and info.github %}
+                                                    <span class="badge bg-success">Local & GitHub</span>
+                                                {% elif info.local %}
+                                                    <span class="badge bg-primary">Local</span>
+                                                {% elif info.github %}
+                                                    <span class="badge bg-secondary">GitHub</span>
+                                                {% endif %}
+                                            </div>
+                                            <div class="btn-group" role="group">
+                                                {% if info.local %}
+                                                    <a href="{{ url_for('download_file', filename=filename) }}" class="btn btn-success btn-sm">Download</a>
+                                                    <a href="{{ url_for('delete_file', filename=filename) }}" class="btn btn-danger btn-sm">Delete</a>
+                                                {% else %}
+                                                    <span class="text-muted small">Not downloaded</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <p class="text-muted">No files available.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
