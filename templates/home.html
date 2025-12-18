@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .title-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card.file-upload {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .feature-card.image-convert {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+            margin-bottom: 3rem;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="hero-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h1 class="display-4 fw-bold mb-3">File Management System</h1>
+                    <p class="lead mb-0">Choose your preferred tool for file operations</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="row g-4">
+                    <!-- File Upload & Download -->
+                    <div class="col-md-6">
+                        <div class="card feature-card file-upload h-100" onclick="window.location.href='/files'">
+                            <div class="card-body text-center d-flex flex-column justify-content-center">
+                                <i class="bi bi-cloud-upload feature-icon"></i>
+                                <h3 class="card-title mb-3">File Upload & Download</h3>
+                                <p class="card-text mb-4">
+                                    Upload, download, and manage files with GitHub synchronization.
+                                    Supports various file types including images, documents, and more.
+                                </p>
+                                <div class="mt-auto">
+                                    <span class="badge bg-light text-dark me-2">Upload</span>
+                                    <span class="badge bg-light text-dark me-2">Download</span>
+                                    <span class="badge bg-light text-dark">GitHub Sync</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image Converter -->
+                    <div class="col-md-6">
+                        <div class="card feature-card image-convert h-100" onclick="window.location.href='/convert'">
+                            <div class="card-body text-center d-flex flex-column justify-content-center">
+                                <i class="bi bi-images feature-icon"></i>
+                                <h3 class="card-title mb-3">Image Converter</h3>
+                                <p class="card-text mb-4">
+                                    Convert images between different formats. Transform JPG to PNG,
+                                    PNG to JPG, and many other image format conversions.
+                                </p>
+                                <div class="mt-auto">
+                                    <span class="badge bg-light text-dark me-2">JPG ↔ PNG</span>
+                                    <span class="badge bg-light text-dark me-2">Format Conversion</span>
+                                    <span class="badge bg-light text-dark">Batch Processing</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-5">
+                    <p class="text-muted">
+                        <small>Select a feature above to get started</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
