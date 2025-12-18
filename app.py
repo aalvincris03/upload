@@ -288,6 +288,42 @@ def sync_files():
         flash(f'Sync failed: {message}')
     return redirect(url_for('index'))
 
+@app.route('/sync_to_github')
+def sync_to_github():
+    """Sync files from local folder to GitHub repository"""
+    if GITHUB_REPO == 'your-username/your-repo-name' or GITHUB_TOKEN == 'your-github-personal-access-token':
+        flash("GitHub not configured")
+        return redirect(url_for('index'))
+
+    try:
+        # Get local files
+        local_files = set(os.listdir(UPLOAD_FOLDER))
+
+        # Get list of files on GitHub
+        github_files = get_github_files()
+        github_files_set = set(github_files)
+
+        uploaded_count = 0
+        for filename in local_files:
+            if filename not in github_files_set:
+                # Upload missing file to GitHub
+                file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                if os.path.isfile(file_path):  # Ensure it's a file
+                    github_success = upload_to_github(file_path, filename)
+                    if github_success:
+                        uploaded_count += 1
+                        print(f"Uploaded {filename} to GitHub")
+                    else:
+                        print(f"Failed to upload {filename} to GitHub")
+
+        flash(f"Successfully uploaded {uploaded_count} new files to GitHub")
+        return redirect(url_for('index'))
+
+    except Exception as e:
+        print(f"GitHub sync error: {e}")
+        flash(f"GitHub sync error: {e}")
+        return redirect(url_for('index'))
+
 @app.route('/delete_all')
 def delete_all_files():
     """Delete all local files and corresponding GitHub files"""
@@ -315,3 +351,4 @@ def delete_all_files():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
